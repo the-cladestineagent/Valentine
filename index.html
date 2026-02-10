@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For My Love ❤️</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+
+  .screen {
+    display: none;
+    animation: fadeIn 1.5s ease forwards;
+    z-index: 2;
+  }
+
+  .active {
+    display: block;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  p {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+
+  .heart {
+    font-size: 3rem;
+    animation: heartbeat 1.2s infinite;
+  }
+
+  button {
+    margin-top: 25px;
+    padding: 14px 35px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff4d6d;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  /* Floating Hearts */
+  .floating-heart {
+    position: absolute;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+  }
+</style>
+  
+</head>
+<body>
+
+  <!-- AUDIO -->
+  <audio id="poemAudio">
+    <source src="/static/audio/poem.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- SCREEN 1 -->
+  <div id="screen1" class="screen active">
+    <h1>Hey My Love 💖</h1>
+    <p>I made something special for you...</p>
+    <button onclick="startExperience()">Tap to Start ✨</button>
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div id="screen2" class="screen">
+    <h1>I Love You ❤️</h1>
+    <p>This poem is straight from my heart 🥹</p>
+    <div class="heart">💞</div>
+  </div>
+
+  <script>
+  const poemLines = [
+    "Every heartbeat of mine whispers your name ❤️",
+    "In your smile, I find my peace ✨",
+    "In your eyes, I see my forever 💫",
+    "You are my today, and all my tomorrows 💖",
+    "I love you more than words can ever express 🥹"
+  ];
+
+  function startExperience() {
+    document.getElementById("poemAudio").play();
+    document.getElementById("screen1").classList.remove("active");
+    document.getElementById("screen2").classList.add("active");
+
+    let i = 0;
+    const p = document.querySelector("#screen2 p");
+
+    const interval = setInterval(() => {
+      if (i < poemLines.length) {
+        p.innerHTML = poemLines[i];
+        i++;
+      } else {
+        clearInterval(interval);
+        setTimeout(showFinalScreen, 3000);
+      }
+    }, 3000);
+  }
+
+  function showFinalScreen() {
+    document.body.innerHTML = `
+      <div class="screen active">
+        <h1>Will You Be My Valentine? 💘</h1>
+        <p>You mean the world to me 🥹</p>
+        <div class="heart">❤️</div>
+      </div>
+    `;
+  }
+
+  // Floating hearts animation
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+  }, 300);
+</script>
+
+</body>
+</html>
